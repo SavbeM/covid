@@ -1,10 +1,12 @@
 import './App.css';
 import React from "react";
+import {CovidStatusMain} from "./components/CovidStatusMain";
+
 
 function App() {
   return (
-    <div className="App">
-
+    <div className="appWrapper">
+      <CovidStatusMain/>
     </div>
   );
 }
