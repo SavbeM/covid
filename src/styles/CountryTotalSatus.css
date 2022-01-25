@@ -1,0 +1,5 @@
+.countryStatusTable{
+    width: 500px;
+    height: 720px;
+    overflow: auto;
+}
