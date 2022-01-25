@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Table from 'react-bootstrap/Table'
 import "../styles/CountryTotalSatus.css"
 import {Spinner} from "react-bootstrap";
@@ -22,14 +22,20 @@ export const CountryTotalStatus = (props) => {
 
 export const CountryStatusTableContent = (props) => {
     const [sortByConfirmed, setSortByConfirmed] = useState(true)
+    const [sortedInformation, setSortedInformation] = useState(props.countryData)
+    const sortBy = (data) => {
+        if (sortByConfirmed === true) {
+           return data.sort((a,b) => b.latest_data.confirmed - a.latest_data.confirmed)
+        }
+    }
+
+    useEffect(() => { setSortedInformation(sortBy(props.countryData))}, [props.countryData])
 
 
     return (<>{
-            props
-            .countryData ?  props.countryData.map(i => {
+            sortedInformation ?  sortedInformation.map(i => {
                 return (
-
-                    <tbody>
+                    <tbody key={i.code}>
                     <tr>
                         <td>{i.name}</td>
                         <td>{i.latest_data.confirmed}</td>

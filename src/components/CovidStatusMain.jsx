@@ -12,7 +12,7 @@ export const CovidStatusMain = () => {
            data =>  setCountryData(data.data.data)
        )
     }, [setTimeout(10000)])
-    console.log(countryData)
+
 
     if (countryData !== undefined) {
         return(
