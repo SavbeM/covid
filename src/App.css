@@ -2,3 +2,8 @@
     background-image: url('../assets/bgc.jpeg');
     height: 1440px;
 }
+
+.articleTitle {
+    color: aliceblue;
+    font-weight: bold;
+}
