@@ -1,15 +1,14 @@
 import React from "react";
-import {ListGroup} from "react-bootstrap";
 import {Card} from "react-bootstrap";
 
 export const MoreAboutCountry = (props) => {
     return (
         <>
             {props.counrtyData.map(e => e.code === props.moreAboutCountry.id ?
-                <div>
-                    <Card  border="info" style={{ width: '18rem' }}>
+                <div key={e.code}>
+                    <Card text={"light"} bg={"dark"} border="light" style={{ width: '19rem' }}>
                         <Card.Header>{e.name}</Card.Header>
-                        <Card.Body>
+                        <Card.Body className="mb-2">
                             <Card.Title>Population: {e.population}</Card.Title>
                             <Card.Text>
                                 Today confirmed: {e.today.confirmed}
