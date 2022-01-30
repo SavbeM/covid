@@ -5,23 +5,37 @@ import {CountryTotalStatus} from "./CountryTotalStatus";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import {MoreAboutCountry} from "./MoreAboutCountry";
-
+import {Form} from "react-bootstrap";
+import {ConfirmedChart} from "./ConfirmedChart";
 
 
 export const CovidStatusMain = () => {
-
-    const [moreAboutCountry, setMoreAboutCountry] = useState({value:false, id: null})
+    const [moreAboutCountry, setMoreAboutCountry] = useState({id: "UA"})
     const [countryData, setCountryData] = useState()
+    const [ search, setSearch] = useState("");
+    const [timeline, setTimeline] = useState()
+
+
     useEffect(() => {
             axios.get("https://corona-api.com/countries").then(
                 data => {
                     setCountryData(data.data.data)
                 }
             )
+            axios.get("https://corona-api.com/timeline").then(
+                data => {
+                    setTimeline(data.data.data.slice(0,5))
+
+                }
+            )
         }, []
     )
 
-
+    const sorted = countryData ? countryData.filter((val)=> {
+        if(search !== "" && search !== null &&val.name.toLowerCase().includes(search.toLowerCase())){
+            return val
+        }
+    }) : null
 
     if (countryData !== undefined) {
         return (
@@ -29,12 +43,13 @@ export const CovidStatusMain = () => {
                 <Container>
                     <Row>
                         <Col>
-                            <h1 className="articleTitle">TOTAL CASES</h1>
-                                <ReactSearchBox placeholder="Type country" data={[countryData]} callback={(record) => console.log(record)}   ></ReactSearchBox>
-                            <CountryTotalStatus setMoreAboutCountry={setMoreAboutCountry} moreAboutCountry={moreAboutCountry} countryData={countryData}/>
+                            <h1 className="articleTitle">TOTAL STATUS</h1>
+                            <Form.Control onChange={e => setSearch(e.target.value)} placeholder="Enter country" />
+                            <CountryTotalStatus  setMoreAboutCountry={setMoreAboutCountry} moreAboutCountry={moreAboutCountry} countryData={countryData} sortedData={sorted}/>
                         </Col>
                         <Col>
-                            {moreAboutCountry.value ? <div><h1 className="articleTitle">IN CHOOSEN COUNTRY</h1> <MoreAboutCountry moreAboutCountry={moreAboutCountry} counrtyData={countryData}/></div> : null}
+                            {moreAboutCountry.id ? <div><h1 className="articleTitle">IN CHOOSEN COUNTRY</h1> <MoreAboutCountry moreAboutCountry={moreAboutCountry} counrtyData={countryData}/></div> : null}
+                            <div><ConfirmedChart timelineData={timeline}/></div>
                         </Col>
                     </Row>
                 </Container>
