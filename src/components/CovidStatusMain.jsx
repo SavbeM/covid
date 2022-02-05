@@ -49,7 +49,12 @@ export const CovidStatusMain = () => {
                         </Col>
                         <Col>
                             {moreAboutCountry.id ? <div><h1 className="articleTitle">IN CHOOSEN COUNTRY</h1> <MoreAboutCountry moreAboutCountry={moreAboutCountry} counrtyData={countryData}/></div> : null}
-                            <div><ConfirmedChart timelineData={timeline}/></div>
+                            <div>
+                                <h1 className="articleTitle">LATEST INFORMATION</h1>
+                                <div>
+                                <ConfirmedChart  timelineData={timeline}/>
+                                </div>
+                            </div>
                         </Col>
                     </Row>
                 </Container>
